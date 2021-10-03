@@ -8,6 +8,21 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    @all_ratings = Movie.all_ratings
+    
+    @selected_ratings = params[:ratings] if params[:ratings]
+    @title = params[:title] if params[:title]
+
+    set_session(@title, @selected_ratings)
+
+    if !@selected_ratings || !@title
+      @selected_ratings =  get_selected_ratings() unless @selected_ratings
+      @title = get_title() unless @title
+      # redirect back to the index with the approproate variables in the params hash
+      redirect_to movies_path({ratings: @selected_ratings, title: @title}) 
+    end
+
+    @movies = Movie.sort_and_filter(@title, @selected_ratings)
   end
 
   def new
