@@ -7,22 +7,14 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    sort = params[:sort]
+    order = params[:order]
+    @order = (order.nil? || order == 'desc') ? 'asc' : 'desc'
+
     @all_ratings = Movie.all_ratings
-    
-    @ratings_to_show_hash = params[:ratings] if params[:ratings]
-    @title = params[:title] if params[:title]
-
-    set_session(@title, @ratings_to_show_hash)
-
-    if !@ratings_to_show_hash || !@title
-      @ratings_to_show_hash =  get_selected_ratings() unless @ratings_to_show_hash
-      @title = get_title() unless @title
-      # redirect back to the index with the appropriate variables in the params hash
-      redirect_to movies_path({ratings: @ratings_to_show_hash, title: @title}) 
-    end
-
-    @movies = Movie.sort_and_filter(@title, @ratings_to_show_hash)
+    ratings = params[:ratings]
+    @ratings_to_show_hash = ratings.nil? ? Movie.all_ratings : ratings.keys
+    @movies = Movie.order("#{sort} #{order}").where('rating IN (?)', @ratings).all
   end
 
   def new
