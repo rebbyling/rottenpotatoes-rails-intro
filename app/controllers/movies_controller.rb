@@ -10,19 +10,19 @@ class MoviesController < ApplicationController
     @movies = Movie.all
     @all_ratings = Movie.all_ratings
     
-    @selected_ratings = params[:ratings] if params[:ratings]
+    @ratings_to_show_hash = params[:ratings] if params[:ratings]
     @title = params[:title] if params[:title]
 
-    set_session(@title, @selected_ratings)
+    set_session(@title, @ratings_to_show_hash)
 
-    if !@selected_ratings || !@title
-      @selected_ratings =  get_selected_ratings() unless @selected_ratings
+    if !@ratings_to_show_hash || !@title
+      @ratings_to_show_hash =  get_selected_ratings() unless @ratings_to_show_hash
       @title = get_title() unless @title
-      # redirect back to the index with the approproate variables in the params hash
-      redirect_to movies_path({ratings: @selected_ratings, title: @title}) 
+      # redirect back to the index with the appropriate variables in the params hash
+      redirect_to movies_path({ratings: @ratings_to_show_hash, title: @title}) 
     end
 
-    @movies = Movie.sort_and_filter(@title, @selected_ratings)
+    @movies = Movie.sort_and_filter(@title, @ratings_to_show_hash)
   end
 
   def new
