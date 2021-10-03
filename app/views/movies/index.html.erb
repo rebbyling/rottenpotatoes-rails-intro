@@ -16,9 +16,11 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th>Movie Title</th>
+      <th><%= link_to "Movie Title", movies_path(sort: 'title', order: @order, ratings: params[:ratings]), id: 'title_header' %>
+        Movie Title</th>
       <th>Rating</th>
-      <th>Release Date</th>
+      <th><%= "Release Date", movies_path(sort: 'release_date', order: @order, ratings: params[:ratings]), id: 'release_date_header' %>
+        Release Date</th>
       <th>More Info</th>
     </tr>
   </thead>
