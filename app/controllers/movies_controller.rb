@@ -10,9 +10,9 @@ class MoviesController < ApplicationController
     sort = params[:sort] || session[:sort]
     case sort
     when 'title'
-      ordering,@title_header = {:order => :title}, 'hilite'
+      ordering,@title_header = {:title => :asc}, 'hilite bg-warning'
     when 'release_date'
-      ordering,@date_header = {:order => :release_date}, 'hilite'
+      ordering,@date_header = {:release_date => :asc}, 'bg-warning hilite'
     end
     @all_ratings = Movie.all_ratings
     @ratings_to_show_hash = params[:ratings] || session[:ratings] || {}

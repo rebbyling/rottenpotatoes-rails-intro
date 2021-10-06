@@ -16,11 +16,13 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
+      <th><%= link_to "Movie Title", movies_path(:sort => 'title', :ratings => @ratings_to_show_hash), id: 'title_header' %>
+        </th>
       <th>
-        Movie Title</th>
-      <th>Rating</th>
+        Rating</th>
       <th>
-        Release Date</th>
+        <%= link_to "Release Date", movies_path(:sort => 'release_date', :ratings => @ratings_to_show_hash), id: 'release_date_header' %>
+      </th>
       <th>More Info</th>
     </tr>
   </thead>
