@@ -29,7 +29,7 @@ class MoviesController < ApplicationController
       flash.keep
       redirect_to :sort => sort, :ratings => @selected_ratings and return
     end
-    @movies = Movie.find_all_by_rating(@selected_ratings.keys, ordering).all
+    @movies = Movie.where(rating: @selected_ratings.keys).order(ordering)
   end
 
   def new
