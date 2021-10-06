@@ -15,7 +15,7 @@ class MoviesController < ApplicationController
       ordering,@date_header = {:release_date => :asc}
     end
     @all_ratings = Movie.all_ratings
-    @ratings_to_show_hash = params[:ratings] || session[:ratings] || {} 
+    @ratings_to_show_hash = params[:ratings] || session[:ratings] || {'G': '1', 'PG': '1', 'PG-13': '1', 'R': '1'} 
   
     #part 3:
     if params[:sort] != session[:sort]
