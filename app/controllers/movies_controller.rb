@@ -16,7 +16,8 @@ class MoviesController < ApplicationController
     end
     @all_ratings = Movie.all_ratings
     @ratings_to_show_hash = params[:ratings] || session[:ratings] || {}
-
+  
+    #part 3:
     if params[:sort] != session[:sort]
       session[:sort] = sort
       flash.keep
