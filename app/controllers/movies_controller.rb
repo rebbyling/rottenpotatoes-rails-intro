@@ -15,21 +15,21 @@ class MoviesController < ApplicationController
       ordering,@date_header = {:order => :release_date}, 'hilite'
     end
     @all_ratings = Movie.all_ratings
-    @selected_ratings = params[:ratings] || session[:ratings] || {}
+    @ratings_to_show_hash = params[:ratings] || session[:ratings] || {}
 
     if params[:sort] != session[:sort]
       session[:sort] = sort
       flash.keep
-      redirect_to :sort => sort, :ratings => @selected_ratings and return
+      redirect_to :sort => sort, :ratings => @ratings_to_show_hash and return
     end
 
-    if params[:ratings] != session[:ratings] and @selected_ratings != {}
+    if params[:ratings] != session[:ratings] and @ratings_to_show_hash != {}
       session[:sort] = sort
-      session[:ratings] = @selected_ratings
+      session[:ratings] = @ratings_to_show_hash
       flash.keep
-      redirect_to :sort => sort, :ratings => @selected_ratings and return
+      redirect_to :sort => sort, :ratings => @ratings_to_show_hash and return
     end
-    @movies = Movie.where(rating: @selected_ratings.keys).order(ordering)
+    @movies = Movie.where(rating: @ratings_to_show_hash.keys).order(ordering)
   end
 
   def new
